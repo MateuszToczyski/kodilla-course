@@ -22,7 +22,7 @@ public class CollectionTestSuite {
 
         ArrayList<Integer> inputList = new ArrayList<>();
         ArrayList<Integer> correctOutputList = new ArrayList<>();
-        ArrayList actualOutputList = exterminator.exterminate(inputList);
+        ArrayList<Integer> actualOutputList = exterminator.exterminate(inputList);
 
         Assert.assertEquals(correctOutputList, actualOutputList);
     }
@@ -34,7 +34,7 @@ public class CollectionTestSuite {
 
         ArrayList<Integer> inputList = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         ArrayList<Integer> correctOutputList = new ArrayList<>(Arrays.asList(2, 4));
-        ArrayList actualOutputList = exterminator.exterminate(inputList);
+        ArrayList<Integer> actualOutputList = exterminator.exterminate(inputList);
 
         Assert.assertEquals(correctOutputList, actualOutputList);
     }
