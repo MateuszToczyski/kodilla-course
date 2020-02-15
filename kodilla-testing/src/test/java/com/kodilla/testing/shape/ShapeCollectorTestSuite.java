@@ -31,12 +31,8 @@ public class ShapeCollectorTestSuite {
 
         collector.removeFigure(new Circle(5.5));
 
-        List<Shape> expected = new ArrayList<>();
-
-        expected.add(new Square(10));
-        expected.add(new Triangle(6, 4.5));
-
-        List<Shape> actual = collector.getShapes();
+        int expected = 2;
+        int actual = collector.getShapes().size();
 
         Assert.assertEquals(expected, actual);
     }
@@ -54,5 +50,17 @@ public class ShapeCollectorTestSuite {
         Shape actual = collector.getFigure(1);
 
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetFigureOutOfBoundsException() {
+
+        ShapeCollector collector = new ShapeCollector();
+
+        collector.addFigure(new Circle(5.5));
+        collector.addFigure(new Square(10));
+        collector.addFigure(new Triangle(6, 4.5));
+
+        collector.getFigure(3);
     }
 }
