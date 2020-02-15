@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class WeatherForecastTestSuite {
+
     @Test
     public void testCalculateForecastWithStub(){
         //Given
