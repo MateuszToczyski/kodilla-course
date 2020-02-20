@@ -1,21 +1,27 @@
 package com.kodilla.stream;
 
-import com.kodilla.stream.book.Book;
-import com.kodilla.stream.book.BookDirectory;
+import com.kodilla.stream.forumuser.*;
+
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class StreamMain {
+
     public static void main(String[] args) {
-        BookDirectory theBookDirectory = new BookDirectory();
 
-        Map<String, Book> theResultMapOfBooks = theBookDirectory.getList().stream()
-                .filter(book -> book.getYearOfPublication() > 2005)
-                .collect(Collectors.toMap(Book::getSignature, book -> book));
+        Forum forum = new Forum();
 
-        System.out.println("# elements: " + theResultMapOfBooks.size());
-        theResultMapOfBooks.entrySet().stream()
-                .map(entry -> entry.getKey() + ": " + entry.getValue())
+        Map<Object, Object> users =  forum.getUserList().stream()
+                .filter(user -> user.getGender() == 'M')
+                .filter(user -> DAYS.between(user.getDateOfBirth(), LocalDate.now()) >= 20)
+                .filter(user -> user.getNumberOfPosts() > 0)
+                .collect(Collectors.toMap(ForumUser::getId, ForumUser::getName));
+
+        users.entrySet().stream()
+                .map(entry -> "id: " + entry.getKey() + ", name: " + entry.getValue())
                 .forEach(System.out::println);
     }
 }
