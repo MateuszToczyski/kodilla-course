@@ -14,7 +14,7 @@ public class StreamMain {
 
         Forum forum = new Forum();
 
-        Map<Object, Object> users =  forum.getUserList().stream()
+        Map<Integer, String> users =  forum.getUserList().stream()
                 .filter(user -> user.getGender() == 'M')
                 .filter(user -> DAYS.between(user.getDateOfBirth(), LocalDate.now()) >= 20)
                 .filter(user -> user.getNumberOfPosts() > 0)
