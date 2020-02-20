@@ -1,22 +1,21 @@
 package com.kodilla.stream;
 
-import com.kodilla.stream.beautifier.*;
-import com.kodilla.stream.iterate.*;
+import com.kodilla.stream.book.Book;
+import com.kodilla.stream.book.BookDirectory;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class StreamMain {
-
     public static void main(String[] args) {
+        BookDirectory theBookDirectory = new BookDirectory();
 
-        PoemBeautifier beautifier = new PoemBeautifier();
+        Map<String, Book> theResultMapOfBooks = theBookDirectory.getList().stream()
+                .filter(book -> book.getYearOfPublication() > 2005)
+                .collect(Collectors.toMap(Book::getSignature, book -> book));
 
-        String rawText = "tHiS iS sOmE rAw tExT";
-
-        String upperCase = beautifier.beautify(rawText, String::toUpperCase);
-        String lowerCase = beautifier.beautify(rawText, String::toLowerCase);
-
-        System.out.print(upperCase + ", " + lowerCase);
-
-        System.out.println("Using Stream to generate even numbers from 1 to 20");
-        NumbersGenerator.generateEven(20);
+        System.out.println("# elements: " + theResultMapOfBooks.size());
+        theResultMapOfBooks.entrySet().stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .forEach(System.out::println);
     }
 }
