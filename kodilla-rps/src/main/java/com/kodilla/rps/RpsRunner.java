@@ -6,14 +6,16 @@ public class RpsRunner {
 
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
+
         MAIN_LOOP: //Every iteration starts a new game. Breaks if user inputs "x".
         while(true) {
 
             System.out.println("Enter your name:");
 
-            String username = new Scanner(System.in).nextLine();
+            String username = scanner.nextLine();
 
-            int targetScore = getTargetScoreFromInput();
+            int targetScore = getTargetScoreFromInput(scanner);
 
             System.out.println("Hello " + username + "! Valid inputs: 1: rock, 2: paper, 3: scissors, n: new game, x: quit");
 
@@ -23,17 +25,17 @@ public class RpsRunner {
 
                 System.out.println("Enter your choice:");
 
-                String input = getUserInput("1", "2", "3", "x", "n");
+                String input = getUserInput(scanner, "1", "2", "3", "x", "n");
 
                 if(input.equals("x")) {
 
-                    if(checkUserConfirmation("Do you really want to quit? (y / n)")) {
+                    if(checkUserConfirmation(scanner, "Do you really want to quit? (y / n)")) {
                         break MAIN_LOOP;
                     }
 
                 } else if(input.equals("n")) {
 
-                    if(checkUserConfirmation("Do you want to start a new game? (y / n)")) {
+                    if(checkUserConfirmation(scanner, "Do you want to start a new game? (y / n)")) {
                         continue MAIN_LOOP;
                     }
 
@@ -47,7 +49,7 @@ public class RpsRunner {
                         System.out.println(game.getResult());
 
                         System.out.println("\"n\" to play a new game, \"x\" to exit:");
-                        input = getUserInput("x", "n");
+                        input = getUserInput(scanner, "x", "n");
 
                         if(input.equals("x")) {
                             break MAIN_LOOP;
@@ -62,9 +64,7 @@ public class RpsRunner {
         System.out.println("Program ended.");
     }
 
-    private static int getTargetScoreFromInput() {
-
-        Scanner scanner = new Scanner(System.in);
+    private static int getTargetScoreFromInput(Scanner scanner) {
 
         boolean isInputValid = false;
         int targetScore = 0;
@@ -87,9 +87,7 @@ public class RpsRunner {
         return targetScore;
     }
 
-    private static String getUserInput(String... validInputs) {
-
-        Scanner scanner = new Scanner(System.in);
+    private static String getUserInput(Scanner scanner, String... validInputs) {
 
         String input = scanner.nextLine();
 
@@ -101,9 +99,7 @@ public class RpsRunner {
         return input;
     }
 
-    private static boolean checkUserConfirmation(String message) {
-
-        Scanner scanner = new Scanner(System.in);
+    private static boolean checkUserConfirmation(Scanner scanner, String message) {
 
         String input = "";
 
@@ -167,40 +163,15 @@ class Game {
 
     private int calculateScore(int choice, int opponentsChoice) {
 
-        int score;
+        if(choice == 1 && opponentsChoice == 3 ||
+           choice == 2 && opponentsChoice == 1 ||
+           choice == 3 && opponentsChoice == 2) {
 
-        if(choice == 1) {
-
-            if(opponentsChoice == 1) {
-                score = 0;
-            } else if(opponentsChoice == 2) {
-                score = 0;
-            } else {
-                score = 1;
-            }
-
-        } else if(choice == 2) {
-
-            if(opponentsChoice == 1) {
-                score = 1;
-            } else if(opponentsChoice == 2) {
-                score = 0;
-            } else {
-                score = 0;
-            }
+            return 1;
 
         } else {
-
-            if(opponentsChoice == 1) {
-                score = 0;
-            } else if(opponentsChoice == 2) {
-                score = 1;
-            } else {
-                score = 0;
-            }
+            return 0;
         }
-
-        return score;
     }
 
     private int generateCpuChoice() {
