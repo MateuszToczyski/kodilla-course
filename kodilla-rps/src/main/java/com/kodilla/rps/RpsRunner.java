@@ -9,7 +9,13 @@ public class RpsRunner {
         MAIN_LOOP: //Every iteration starts a new game. Breaks if user inputs "x".
         while(true) {
 
+            System.out.println("Enter your name:");
+
+            String username = new Scanner(System.in).nextLine();
+
             int targetScore = getTargetScoreFromInput();
+
+            System.out.println("Hello " + username + "! Valid inputs: 1: rock, 2: paper, 3: scissors, n: new game, x: quit");
 
             Game game = new Game(targetScore);
 
