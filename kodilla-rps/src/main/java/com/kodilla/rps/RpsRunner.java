@@ -70,18 +70,20 @@ public class RpsRunner {
         int targetScore = 0;
 
         while(!isInputValid) {
+
             try {
                 System.out.println("Enter target score:");
                 targetScore = Integer.parseInt(scanner.nextLine());
-                isInputValid = true;
             } catch(Exception ex) {
                 System.out.println("Value must be an integer.");
+                continue;
             }
-        }
 
-        while(targetScore < 1) {
-            System.out.println("Value must be greater than 0. Enter valid target score:");
-            targetScore = Integer.parseInt(scanner.nextLine());
+            if(targetScore > 0) {
+                isInputValid = true;
+            } else {
+                System.out.println("Value must be greater than 0.");
+            }
         }
 
         return targetScore;
