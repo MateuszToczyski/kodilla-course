@@ -71,8 +71,9 @@ public class RpsRunner {
 
         while(!isInputValid) {
 
+            System.out.println("Enter target score:");
+
             try {
-                System.out.println("Enter target score:");
                 targetScore = Integer.parseInt(scanner.nextLine());
             } catch(Exception ex) {
                 System.out.println("Value must be an integer.");
