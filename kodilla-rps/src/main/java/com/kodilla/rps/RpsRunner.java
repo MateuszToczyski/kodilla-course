@@ -7,15 +7,16 @@ public class RpsRunner {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+        UserInputHandler inputHandler = new UserInputHandler(scanner);
 
         MAIN_LOOP: //Every iteration starts a new game. Breaks if user inputs "x".
         while(true) {
 
             System.out.println("Enter your name:");
 
-            String username = scanner.nextLine();
+            String username = inputHandler.nextLine();
 
-            int targetScore = getTargetScoreFromInput(scanner);
+            int targetScore = inputHandler.getTargetScoreFromInput();
 
             System.out.println("Hello " + username + "! Valid inputs: 1: rock, 2: paper, 3: scissors, n: new game, x: quit");
 
@@ -25,17 +26,17 @@ public class RpsRunner {
 
                 System.out.println("Enter your choice:");
 
-                String input = getUserInput(scanner, "1", "2", "3", "x", "n");
+                String input = inputHandler.getUserInput("1", "2", "3", "x", "n");
 
                 if(input.equals("x")) {
 
-                    if(checkUserConfirmation(scanner, "Do you really want to quit? (y / n)")) {
+                    if(inputHandler.checkUserConfirmation("Do you really want to quit? (y / n)")) {
                         break MAIN_LOOP;
                     }
 
                 } else if(input.equals("n")) {
 
-                    if(checkUserConfirmation(scanner, "Do you want to start a new game? (y / n)")) {
+                    if(inputHandler.checkUserConfirmation("Do you want to start a new game? (y / n)")) {
                         continue MAIN_LOOP;
                     }
 
@@ -49,7 +50,7 @@ public class RpsRunner {
                         System.out.println(game.getResult());
 
                         System.out.println("\"n\" to play a new game, \"x\" to exit:");
-                        input = getUserInput(scanner, "x", "n");
+                        input = inputHandler.getUserInput("x", "n");
 
                         if(input.equals("x")) {
                             break MAIN_LOOP;
@@ -62,59 +63,5 @@ public class RpsRunner {
         }
 
         System.out.println("Program ended.");
-    }
-
-    private static int getTargetScoreFromInput(Scanner scanner) {
-
-        boolean isInputValid = false;
-        int targetScore = 0;
-
-        while(!isInputValid) {
-
-            System.out.println("Enter target score:");
-
-            try {
-                targetScore = Integer.parseInt(scanner.nextLine());
-            } catch(Exception ex) {
-                System.out.println("Value must be an integer.");
-                continue;
-            }
-
-            if(targetScore > 0) {
-                isInputValid = true;
-            } else {
-                System.out.println("Value must be greater than 0.");
-            }
-        }
-
-        return targetScore;
-    }
-
-    private static String getUserInput(Scanner scanner, String... validInputs) {
-
-        String input = scanner.nextLine();
-
-        while(! Arrays.asList(validInputs).contains(input)) {
-            System.out.println("Invalid input! Enter new choice:");
-            input = scanner.nextLine();
-        }
-
-        return input;
-    }
-
-    private static boolean checkUserConfirmation(Scanner scanner, String message) {
-
-        String input = "";
-
-        System.out.println(message);
-
-        input = scanner.nextLine();
-
-        while(! input.equals("y") && ! input.equals("n")) {
-            System.out.println("Incorrect input. Please enter correct value:");
-            input = scanner.nextLine();
-        }
-
-        return input.equals("y");
     }
 }
