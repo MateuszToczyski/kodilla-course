@@ -7,8 +7,8 @@ public class UserInputHandler {
 
     private Scanner scanner;
 
-    public UserInputHandler(Scanner scanner) {
-        this.scanner = scanner;
+    public UserInputHandler() {
+        this.scanner = new Scanner(System.in);
     }
 
     public String getUserName() {
