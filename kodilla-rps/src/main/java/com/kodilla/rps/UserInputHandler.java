@@ -11,8 +11,17 @@ public class UserInputHandler {
         this.scanner = scanner;
     }
 
-    public String nextLine() {
-        return scanner.nextLine();
+    public String getUserName() {
+
+        System.out.println("Enter your name:");
+        String input = scanner.nextLine();
+
+        while(input.length() > 20) {
+            System.out.println("Name can't be longer than 20 characters. Enter valid name:");
+            input = scanner.nextLine();
+        }
+
+        return input;
     }
 
     public int getTargetScoreFromInput() {
