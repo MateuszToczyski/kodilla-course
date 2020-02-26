@@ -1,25 +1,35 @@
 package com.kodilla.rps;
 
 import org.junit.*;
-import org.mockito.Mockito;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyString;
 
 public class RpsTestSuite {
 
     @Test
-    public void testWinningGame() {
+    public void testWinningScenario() {
 
-        CpuChoiceGenerator generatorMock = Mockito.mock(CpuChoiceGenerator.class);
-        Mockito.when(generatorMock.generate()).thenReturn(1); //CPU always plays "rock"
+        UserInputHandler inputHandlerMock = mock(UserInputHandler.class);
 
-        Game game = new Game(3, generatorMock);
+        when(inputHandlerMock.userNameFromInput()).thenReturn("Test user");
+        when(inputHandlerMock.targetScoreFromInput()).thenReturn(3);
+        when(inputHandlerMock.userInputWithLimitedChoice("1", "2", "3", "x", "n"))
+                .thenReturn("1"); //user always chooses "rock"
+        when(inputHandlerMock.userInputWithLimitedChoice("x", "n"))
+                .thenReturn("x"); //user chooses to quit instead of starting a new game
+        when(inputHandlerMock.checkUserConfirmation(anyString())).thenReturn(true); //user always confirms a choice
 
-        game.playRound(1); //play "rock"; score: player - 0, CPU - 0
-        game.playRound(3); //play "scissors"; score: player - 0, CPU - 1
-        game.playRound(2); //play "paper"; score: player - 1, CPU - 1
-        game.playRound(2); //play "paper"; score: player - 2, CPU - 1
-        game.playRound(2); //play "paper"; score: player - 3, CPU - 1
+        CpuChoiceGenerator cpuChoiceGeneratorMock = mock(CpuChoiceGenerator.class);
 
-        Assert.assertTrue(game.isFinished());
-        Assert.assertEquals("Player: 3, CPU: 1", game.getResult());
+        when(cpuChoiceGeneratorMock.generate()).thenReturn(3); //CPU always chooses "scissors"
+
+        GameFlowHandler gameFlowHandler = new GameFlowHandler();
+
+        gameFlowHandler.run(inputHandlerMock, cpuChoiceGeneratorMock);
+
+        Assert.assertEquals(3, gameFlowHandler.getPlayerFinalScore());
+        Assert.assertEquals(0, gameFlowHandler.getCpuFinalScore());
     }
 }
