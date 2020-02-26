@@ -26,12 +26,16 @@ public class Game {
         optionMap.put(3, "scissors");
     }
 
-    public boolean isFinished() {
-        return finished;
+    public int getPlayerScore() {
+        return playerScore;
     }
 
-    public String getResult() {
-        return "Player: " + playerScore + ", CPU: " + cpuScore;
+    public int getCpuScore() {
+        return cpuScore;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 
     public void playRound(int playerChoice) {

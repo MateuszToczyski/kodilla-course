@@ -4,13 +4,13 @@ public class GameFlowHandler {
 
     public void run(UserInputHandler inputHandler, CpuChoiceGenerator cpuChoiceGenerator) {
 
-        String username = inputHandler.getUserName();
+        String username = inputHandler.userNameFromInput();
 
         boolean playNextGame = true;
 
         while(playNextGame) {
 
-            int targetScore = inputHandler.getTargetScoreFromInput();
+            int targetScore = inputHandler.targetScoreFromInput();
 
             Game game = new Game(targetScore, cpuChoiceGenerator);
 
@@ -22,7 +22,7 @@ public class GameFlowHandler {
             while(continueCurrentGame) {
 
                 System.out.println("Enter your choice:");
-                String input = inputHandler.getUserInput("1", "2", "3", "x", "n");
+                String input = inputHandler.userInputWithLimitedChoice("1", "2", "3", "x", "n");
 
                 if(input.equals("x")) {
 
@@ -46,10 +46,10 @@ public class GameFlowHandler {
                         continueCurrentGame = false;
 
                         System.out.println("Game finished with result:");
-                        System.out.println(game.getResult());
+                        System.out.println("Player: " + game.getPlayerScore() +", CPU score: " + game.getCpuScore());
 
                         System.out.println("\"n\" to play a new game, \"x\" to exit:");
-                        input = inputHandler.getUserInput("x", "n");
+                        input = inputHandler.userInputWithLimitedChoice("x", "n");
 
                         if(input.equals("x")) {
                             playNextGame = false;

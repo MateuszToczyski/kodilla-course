@@ -11,7 +11,7 @@ public class UserInputHandler {
         this.scanner = new Scanner(System.in);
     }
 
-    public String getUserName() {
+    public String userNameFromInput() {
 
         System.out.println("Enter your name:");
         String input = scanner.nextLine();
@@ -24,7 +24,7 @@ public class UserInputHandler {
         return input;
     }
 
-    public int getTargetScoreFromInput() {
+    public int targetScoreFromInput() {
 
         boolean isInputValid = false;
         int targetScore = 0;
@@ -50,7 +50,7 @@ public class UserInputHandler {
         return targetScore;
     }
 
-    public String getUserInput(String... validInputs) {
+    public String userInputWithLimitedChoice(String... validInputs) {
 
         String input = scanner.nextLine();
 
