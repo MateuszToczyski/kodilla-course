@@ -2,6 +2,17 @@ package com.kodilla.rps;
 
 public class GameFlowHandler {
 
+    private int playerFinalScore;
+    private int cpuFinalScore;
+
+    public int getPlayerFinalScore() {
+        return playerFinalScore;
+    }
+
+    public int getCpuFinalScore() {
+        return cpuFinalScore;
+    }
+
     public void run(UserInputHandler inputHandler, CpuChoiceGenerator cpuChoiceGenerator) {
 
         String username = inputHandler.userNameFromInput();
@@ -45,8 +56,11 @@ public class GameFlowHandler {
 
                         continueCurrentGame = false;
 
+                        playerFinalScore = game.getPlayerScore();
+                        cpuFinalScore = game.getCpuScore();
+
                         System.out.println("Game finished with result:");
-                        System.out.println("Player: " + game.getPlayerScore() +", CPU score: " + game.getCpuScore());
+                        System.out.println("Player: " + playerFinalScore +", CPU score: " + cpuFinalScore);
 
                         System.out.println("\"n\" to play a new game, \"x\" to exit:");
                         input = inputHandler.userInputWithLimitedChoice("x", "n");
