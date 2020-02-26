@@ -11,9 +11,11 @@ public class Game {
     private int cpuScore;
     private boolean finished;
     private Map<Integer, String> optionMap;
+    private CpuChoiceGenerator cpuChoiceGenerator;
 
-    public Game(int targetScore) {
+    public Game(int targetScore, CpuChoiceGenerator cpuChoiceGenerator) {
         this.targetScore = targetScore;
+        this.cpuChoiceGenerator = cpuChoiceGenerator;
         playerScore = 0;
         cpuScore = 0;
         finished = false;
@@ -34,7 +36,7 @@ public class Game {
 
     public void playRound(int playerChoice) {
 
-        int cpuChoice = generateCpuChoice();
+        int cpuChoice = cpuChoiceGenerator.generate();
 
         System.out.println("Your choice: " + optionMap.get(playerChoice) +
                 ", CPU choice: " + optionMap.get(cpuChoice));
@@ -60,10 +62,5 @@ public class Game {
         } else {
             return 0;
         }
-    }
-
-    private int generateCpuChoice() {
-        Random random = new Random();
-        return random.nextInt(3) + 1;
     }
 }

@@ -9,35 +9,38 @@ public class RpsRunner {
         Scanner scanner = new Scanner(System.in);
         UserInputHandler inputHandler = new UserInputHandler(scanner);
 
-        MAIN_LOOP: //Every iteration starts a new game. Breaks if user inputs "x".
-        while(true) {
+        System.out.println("Enter your name:");
+        String username = inputHandler.nextLine();
 
-            System.out.println("Enter your name:");
+        boolean playNextGame = true;
 
-            String username = inputHandler.nextLine();
+        while(playNextGame) {
 
             int targetScore = inputHandler.getTargetScoreFromInput();
 
-            System.out.println("Hello " + username + "! Valid inputs: 1: rock, 2: paper, 3: scissors, n: new game, x: quit");
+            System.out.println("Hello " + username +
+                    "! Valid inputs: 1: rock, 2: paper, 3: scissors, n: new game, x: quit");
 
-            Game game = new Game(targetScore);
+            Game game = new Game(targetScore, new CpuChoiceGenerator());
 
-            while(true) { //Every iteration starts a new turn. Breaks at the end of game.
+            boolean continueCurrentGame = true;
+
+            while(continueCurrentGame) {
 
                 System.out.println("Enter your choice:");
-
                 String input = inputHandler.getUserInput("1", "2", "3", "x", "n");
 
                 if(input.equals("x")) {
 
                     if(inputHandler.checkUserConfirmation("Do you really want to quit? (y / n)")) {
-                        break MAIN_LOOP;
+                        continueCurrentGame = false;
+                        playNextGame = false;
                     }
 
                 } else if(input.equals("n")) {
 
                     if(inputHandler.checkUserConfirmation("Do you want to start a new game? (y / n)")) {
-                        continue MAIN_LOOP;
+                        continueCurrentGame = false;
                     }
 
                 } else {
@@ -46,6 +49,8 @@ public class RpsRunner {
 
                     if(game.isFinished()) {
 
+                        continueCurrentGame = false;
+
                         System.out.println("Game finished with result:");
                         System.out.println(game.getResult());
 
@@ -53,15 +58,11 @@ public class RpsRunner {
                         input = inputHandler.getUserInput("x", "n");
 
                         if(input.equals("x")) {
-                            break MAIN_LOOP;
-                        } else {
-                            continue MAIN_LOOP;
+                            playNextGame = false;
                         }
                     }
                 }
             }
         }
-
-        System.out.println("Program ended.");
     }
 }
