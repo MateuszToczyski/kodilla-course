@@ -1,7 +1,5 @@
 package com.kodilla.good.patterns.challenges.flights;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,30 +30,32 @@ public class FlightDatabase {
                 .collect(Collectors.toList());
     }
 
-    public List<Flight> findConnectingFlight(Airport departureAirport, Airport destinationAirport) {
+    public List<Flight> findDirectFlights(Airport departureAirport, Airport destinationAirport) {
+        return flights.stream()
+                .filter(flight ->
+                        flight.getDepartureAirport().equals(departureAirport) &&
+                        flight.getDestinationAirport().equals(destinationAirport))
+                .collect(Collectors.toList());
+    }
+
+    public List<ConnectingFlight> findConnectingFlights(Airport departureAirport, Airport destinationAirport) {
 
         if(departureAirport == null || destinationAirport == null) {
             throw new InvalidParameterException("None of the arguments can be null");
         }
 
-        Flight firstFlight = null;
-        Flight secondFlight = null;
+        List<ConnectingFlight> connectingFlights = new ArrayList<>();
 
         for(Flight flight1 : flights) {
             if(flight1.getDepartureAirport().equals(departureAirport)) {
                 for(Flight flight2 : flights) {
-                    if(flight2.getDestinationAirport().equals(destinationAirport)) {
-                        firstFlight = flight1;
-                        secondFlight = flight2;
+                    if(!flight1.equals(flight2) && flight2.getDestinationAirport().equals(destinationAirport)) {
+                        connectingFlights.add(new ConnectingFlight(flight1, flight2));
                     }
                 }
             }
         }
 
-        if(firstFlight != null) {
-            return new ArrayList<>(Arrays.asList(firstFlight, secondFlight));
-        } else {
-            return null;
-        }
+        return connectingFlights;
     }
 }
