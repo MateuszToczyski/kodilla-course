@@ -13,15 +13,10 @@ public class Main {
 
         Map<String, List<String>> movieMap = store.getMovies();
 
-        StringBuilder output = new StringBuilder();
-
-        movieMap.values().stream()
+        String output = movieMap.values().stream()
                 .flatMap(Collection::stream)
-                .collect(Collectors.toList())
-                .forEach(title -> {
-                    output.append(title).append(" ! ");
-                });
+                .collect(Collectors.joining(" ! "));
 
-        System.out.println(output.toString());
+        System.out.println(output);
     }
 }
