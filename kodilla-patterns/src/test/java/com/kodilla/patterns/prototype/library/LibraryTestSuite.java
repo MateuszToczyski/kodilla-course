@@ -12,8 +12,8 @@ public class LibraryTestSuite {
     public void testShallowCopy() throws CloneNotSupportedException {
 
         Book book1 = new Book("Book One", "Author One", LocalDate.of(2000, 1, 1));
-        Book book2 = new Book("Book One", "Author One", LocalDate.of(2000, 1, 1));
-        Book book3 = new Book("Book One", "Author One", LocalDate.of(2000, 1, 1));
+        Book book2 = new Book("Book Two", "Author Two", LocalDate.of(2000, 1, 1));
+        Book book3 = new Book("Book Three", "Author Three", LocalDate.of(2000, 1, 1));
 
         Library library1 = new Library("Library 1");
         library1.getBooks().addAll(Arrays.asList(book1, book2,  book3));
@@ -30,8 +30,8 @@ public class LibraryTestSuite {
     public void testDeepCopy() throws CloneNotSupportedException {
 
         Book book1 = new Book("Book One", "Author One", LocalDate.of(2000, 1, 1));
-        Book book2 = new Book("Book One", "Author One", LocalDate.of(2000, 1, 1));
-        Book book3 = new Book("Book One", "Author One", LocalDate.of(2000, 1, 1));
+        Book book2 = new Book("Book Two", "Author Two", LocalDate.of(2000, 1, 1));
+        Book book3 = new Book("Book Three", "Author Three", LocalDate.of(2000, 1, 1));
 
         Library library1 = new Library("Library 1");
         library1.getBooks().addAll(Arrays.asList(book1, book2,  book3));
