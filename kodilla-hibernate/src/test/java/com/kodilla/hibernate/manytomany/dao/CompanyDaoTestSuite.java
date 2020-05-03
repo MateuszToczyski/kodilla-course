@@ -9,12 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CompanyDaoTestSuite {
 
     @Autowired
     CompanyDao companyDao;
+
+    @Autowired
+    EmployeeDao employeeDao;
 
     @Test
     public void testSaveManyToMany() {
@@ -60,5 +66,39 @@ public class CompanyDaoTestSuite {
         } catch (Exception e) {
             //do nothing
         }
+    }
+
+    @Test
+    public void testCompanyNamedQuery() {
+
+        String letters = "ABC";
+
+        Company company1 = new Company("ABC Technologies");
+        Company company2 = new Company("ABC Solutions");
+        Company company3 = new Company("XYZ Innovation");
+
+        companyDao.saveAll(Arrays.asList(company1, company2, company3));
+
+        List<Company> matchingCompanies = companyDao.retrieveByFirstThreeLetters(letters);
+        Assert.assertEquals(2, matchingCompanies.size());
+
+        companyDao.deleteAll(Arrays.asList(company1, company2, company3));
+    }
+
+    @Test
+    public void testEmployeeNamedQuery() {
+
+        String lastName = "Smith";
+
+        Employee employee1 = new Employee("John", "Smith");
+        Employee employee2 = new Employee("Mark", "Smith");
+        Employee employee3 = new Employee("Steve", "Johnson");
+
+        employeeDao.saveAll(Arrays.asList(employee1, employee2, employee3));
+
+        List<Employee> matchingEmployees = employeeDao.retrieveByLastName(lastName);
+        Assert.assertEquals(2, matchingEmployees.size());
+
+        employeeDao.deleteAll(Arrays.asList(employee1, employee2, employee3));
     }
 }
