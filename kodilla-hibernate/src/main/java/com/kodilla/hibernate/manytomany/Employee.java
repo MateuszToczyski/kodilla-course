@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NamedQuery(name = "Employee.retrieveByLastName", query = "FROM Employee WHERE lastname = :LASTNAME")
+@NamedQuery(
+        name = "Employee.retrieveBySubstring",
+        query = "FROM Employee WHERE LASTNAME LIKE CONCAT('%', :SUBSTR, '%')"
+)
 @Entity
 @Table(name = "EMPLOYEES")
 public class Employee {
